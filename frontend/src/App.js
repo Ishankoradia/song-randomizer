@@ -80,7 +80,7 @@ const App = () => {
             params: {
               s: getRandomSearch(),
               limit: 1,
-              is_market_india: isIndia ? "yes" : "no",
+              ...(isIndia && { is_market_india: "yes" }),
             },
           })
             .then((res) => {

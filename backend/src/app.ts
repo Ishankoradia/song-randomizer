@@ -37,10 +37,10 @@ app.listen(process.env.PORT || 7860, () => {
 });
 
 // Add a song
-app.route('/songs').post(addSong)
+app.route('/api/songs').post(addSong)
 
 // Fetch all songs
-app.route('/songs').get(getSongs)
+app.route('/api/songs').get(getSongs)
 
 // Delete song
-app.route('/songs').delete(deleteSong)
+app.route('/api/songs').delete(deleteSong)
