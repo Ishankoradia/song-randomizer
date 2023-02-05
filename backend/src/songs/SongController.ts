@@ -11,6 +11,20 @@ export const addSong: RequestHandler = async (req, res) => {
         if (!req.body.name)
             throw { mes: 'Please enter the song name', code: 422 }
 
+        let { rows }: any = await new Promise((resolve, reject) => {
+            db.get(`SELECT count(*) as count FROM ${process.env.DB_NAME} WHERE name = '${req.body.name}'`,
+                [],
+                (err: any, rows: any) => {
+                    if (err) {
+                        reject({ mes: err.message, code: 500 })
+                    }
+                    resolve({ rows })
+                })
+        })
+
+        if (rows.count > 0)
+            throw { mes: 'This song has already been added to playlist', code: 409 }
+
         await new Promise((resolve, reject) => {
             db.run(`INSERT INTO ${process.env.DB_NAME} (id, name, url, is_market_india) VALUES (?, ?, ?, ?)`,
                 [uuidv4(), req.body.name, req.body.url || '', req.body.is_market_india],
