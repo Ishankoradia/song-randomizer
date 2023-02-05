@@ -1,11 +1,10 @@
-import "./Songs.css";
+import { Box, Button, Checkbox, InputLabel } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Select from "react-select";
 import AsyncSelect from "react-select/async";
 import { ToastContext } from "./../context/toastProvider";
 import { successToast, errorToast } from "./../utils/toastHelper";
-import { Box } from "@mui/material";
 const Buffer = require("buffer/").Buffer;
 
 const clientId = process.env.REACT_APP_CLIENT_ID;
@@ -38,7 +37,7 @@ function getRandomSearch() {
   return randomSearch;
 }
 
-const Songs = () => {
+const Songs1 = () => {
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [authToken, setAuthToken] = useState("");
@@ -224,70 +223,154 @@ const Songs = () => {
         });
     })();
   };
-
   return (
-    <div className="container">
-      <div className="title">Song randomizer</div>
-      <div className="app-container">
-        <div className="randomize-container">
-          <div className="checkbox-container">
-            <label className="label">Indian market ?</label>
-            <input
-              name="is_india"
-              type="checkbox"
-              checked={isIndia}
-              onChange={handleCheckboxChange}
-              disabled={disableIndiaCheckbox}
+    <Box
+      sx={{
+        backgroundColor: "rgba(1, 1, 14, 0.863)",
+        margin: "auto",
+        minHeight: "100vh",
+        color: "white",
+      }}
+    >
+      <Box
+        name="title"
+        sx={{
+          padding: "10px",
+          textAlign: "center",
+          fontSize: { xs: "25px", md: "50px" },
+          textDecoration: "underline",
+        }}
+      >
+        Song Randomizer
+      </Box>
+      <Box
+        name="main-container"
+        sx={{ display: "flex", flexDirection: "column", alignItems: "stretch" }}
+      >
+        <Box
+          name="input-container"
+          sx={{
+            minHeight: "50vh",
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            color: "white",
+          }}
+        >
+          <Box
+            name="randomize-container"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignSelf: "flex-end",
+              margin: "auto",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <InputLabel sx={{ color: "white" }}>Indian market ?</InputLabel>
+              <Checkbox
+                name="is_india"
+                checked={isIndia}
+                onChange={handleCheckboxChange}
+                disabled={disableIndiaCheckbox}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <InputLabel sx={{ color: "white" }}>
+                Our custom playlist ?
+              </InputLabel>
+              <Checkbox
+                name="is_custom"
+                checked={isCustomPlaylist}
+                onChange={handleCheckboxChange}
+              />
+            </Box>
+            <Button
+              sx={{
+                border: "none",
+                backgroundColor: "grey",
+                cursor: "pointer",
+                padding: { md: "15px 32px", xs: "10px 25px" },
+                fontSize: "16px",
+                color: "white",
+                borderRadius: "5px",
+                width: "250px",
+                ":hover": {
+                  backgroundColor: "rgb(224, 219, 219)",
+                  color: "black",
+                },
+              }}
+              onClick={handleClickRandomize}
+            >
+              Randomize
+            </Button>
+          </Box>
+          <Box
+            name="randomize-container"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignSelf: "flex-end",
+              margin: "auto",
+            }}
+          >
+            <AsyncSelect
+              placeholder="Start typing a song name"
+              loadOptions={loadOptions}
+              defaultOptions
+              styles={customStyles}
+              theme={(theme) => ({
+                ...theme,
+                borderRadius: 5,
+                colors: {
+                  ...theme.colors,
+                  primary25: "black",
+                  primary: "black",
+                },
+              })}
+              onChange={handleSelectChange}
             />
-          </div>
-          <div className="checkbox-container">
-            <label className="label">Our custom playlist ?</label>
-            <input
-              name="is_custom"
-              type="checkbox"
-              checked={isCustomPlaylist}
-              onChange={handleCheckboxChange}
-            />
-          </div>
-          <button className="randomize-button" onClick={handleClickRandomize}>
-            Randomize
-          </button>
-        </div>
-        <div className="randomize-container">
-          <AsyncSelect
-            placeholder="Start typing a song name"
-            loadOptions={loadOptions}
-            defaultOptions
-            styles={customStyles}
-            theme={(theme) => ({
-              ...theme,
-              borderRadius: 5,
-              colors: {
-                ...theme.colors,
-                primary25: "black",
-                primary: "black",
-              },
-            })}
-            onChange={handleSelectChange}
-          />
-          <button className="randomize-button" onClick={saveSongToPlaylist}>
-            Add to playlist
-          </button>
-        </div>
-      </div>
-      <div className="song-container">
-        {tracks.length > 0
-          ? tracks.map((t) => (
-              <div>
-                <a href={t?.url} target="_blank">
-                  {t.name}
-                </a>
-              </div>
-            ))
-          : "Add more songs to the playlist for a better random search"}
-      </div>
-    </div>
+            <Button
+              sx={{
+                border: "none",
+                backgroundColor: "grey",
+                cursor: "pointer",
+                padding: { md: "15px 32px", xs: "10px 25px" },
+                fontSize: "16px",
+                color: "white",
+                borderRadius: "5px",
+                width: "250px",
+                ":hover": {
+                  backgroundColor: "rgb(224, 219, 219)",
+                  color: "black",
+                },
+              }}
+              onClick={saveSongToPlaylist}
+            >
+              Add to playlist
+            </Button>
+          </Box>
+        </Box>
+        <Box
+          name="songs-container"
+          sx={{ backgroundColor: "yellow", minHeight: "50vh" }}
+        >
+          Songs display Container
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
-export default Songs;
+export default Songs1;
