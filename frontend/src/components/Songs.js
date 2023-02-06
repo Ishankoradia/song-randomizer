@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, InputLabel } from "@mui/material";
+import { Box, Button, Checkbox, InputLabel, Link } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Select from "react-select";
@@ -379,15 +379,36 @@ const Songs = () => {
             fontSize: "30px",
           }}
         >
-          {tracks.length > 0
-            ? tracks.map((t) => (
-                <div>
-                  <a href={t?.url} target="_blank">
-                    {t.name}
-                  </a>
-                </div>
-              ))
-            : "Add more songs to the playlist for a better random search"}
+          {tracks.length > 0 ? (
+            tracks.map((t) => (
+              <Box>
+                <Link
+                  sx={{
+                    color: "grey",
+                    textDecoration: "underline",
+                    ":hover": {
+                      color: "white",
+                    },
+                  }}
+                  href={t?.url}
+                  target="_blank"
+                >
+                  {t.name}
+                </Link>
+              </Box>
+            ))
+          ) : (
+            <Box
+              sx={{
+                color: "grey",
+                ":hover": {
+                  color: "white",
+                },
+              }}
+            >
+              Add more songs to the playlist for a better random search
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>
